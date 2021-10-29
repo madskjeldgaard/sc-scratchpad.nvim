@@ -1,0 +1,4 @@
+CommandFoo	sc_scratchpad_nvim.txt	/*CommandFoo*
+feature-one	sc_scratchpad_nvim.txt	/*feature-one*
+feature-two	sc_scratchpad_nvim.txt	/*feature-two*
+sc_scratchpad_nvim.txt	sc_scratchpad_nvim.txt	/*sc_scratchpad_nvim.txt*

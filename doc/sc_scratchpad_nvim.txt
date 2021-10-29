@@ -1,0 +1,13 @@
+*sc_scratchpad_nvim.txt*  Does one thing really well
+
+TODO
+Author:  your-name
+License: LICENSE
+URL: https://github.com/madskjeldgaard/sc-scratchpad.nvim
+
+FEATURES                                            *feature-one*
+Does this thing pretty well.
+                                                    *feature-two*
+Does that thing kinda good
+                                                    *CommandFoo*
+Performs a foo action
