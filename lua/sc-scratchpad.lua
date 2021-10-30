@@ -4,6 +4,46 @@ local scnvim = require"scnvim"
 local send2sc = scnvim.send
 local Popup = require("nui.popup")
 local event = require("nui.utils.autocmd").event
+local settings = {}
+
+-- Defualt settings
+settings.keymaps = {
+	toggle = "<space>",
+	send = "<C-E>"
+}
+
+settings.position = "50%"
+settings.width = "50%"
+settings.height = "50%"
+
+local function register_commands()
+	vim.cmd[[
+	command! SCratch lua require('sc-scratchpad').open()
+	]]
+end
+
+local function register_global_keymaps()
+
+	-- Toggle scratchpad
+	vim.api.nvim_set_keymap("n", settings.keymaps.toggle, ":SCratch<CR>", {})
+end
+
+local function set_popup_maps(popup)
+
+	local keymap_callback_func = function(bufnr)
+		local window = vim.api.nvim_get_current_win()
+		vim.api.nvim_win_close(window, true)
+	end
+
+	popup:map("n", settings.keymaps.send, keymap_callback_func, { noremap = true })
+	popup:map("i", settings.keymaps.send, keymap_callback_func, { noremap = true })
+	popup:map("n", settings.keymaps.toggle, keymap_callback_func, { noremap = true })
+
+	-- Make sure that scnvim's post window toggle doesn't interfere
+	-- @FIXME: This is hacky and should be done in a more reliable fashion compatible with
+	vim.api.nvim_buf_del_keymap(popup.bufnr, "n", "<CR>")
+
+end
 
 -- Turn lines into one long text
 local function flatten_lines(lines_table, keep_linebreaks)
@@ -18,18 +58,6 @@ local function flatten_lines(lines_table, keep_linebreaks)
 	return outstring
 end
 
--- function M.find_scnvim_keymap(rhs_contains)
--- 	local mappings = vim.api.nvim_buf_get_keymap(0, "n")
--- 	local left_hand_sides = {}
-
--- 	for _, mapping in ipairs(mappings) do
--- 		local does_contain = string.find(mapping.rhs, rhs_contains)
--- 		print(mappings.rhs)
--- 		if  does_contain then
--- 			table.insert(left_hand_sides, mapping.lhs)
--- 		end
--- 	end
-
 -- 	return left_hand_sides
 -- end
 function M.open()
@@ -37,17 +65,16 @@ function M.open()
 		enter = true,
 		focusable = true,
 		border = {
-			style = "solid",
-			highlight = "FloatBorder",
-			text = {
-				top = "yo",
-				top_align = "center",
-			},
+			style = "double"
 		},
-		position = "50%",
+		-- border = {
+		-- 	style = "rounded",
+		-- 	highlight = "FloatBorder",
+		-- },
+		position = settings.position,
 		size = {
-			width = "80%",
-			height = "80%",
+			width = settings.width,
+			height = settings.height,
 		},
 		buf_options = {
 			modifiable = true,
@@ -55,33 +82,18 @@ function M.open()
 			filetype = "supercollider",
 		},
 		win_options = {
-			winblend = 5,
+			winblend = 25,
 			winhighlight = "Normal:Normal",
 		},
-
 	})
 
 	-- mount/open the component
 	popup:mount()
 
-	-- popup.border:set_text("top", "sc", "center")
-
-	local map_callback = function(bufnr)
-		local window = vim.api.nvim_get_current_win()
-		vim.api.nvim_win_close(window, true)
-	end
-
-	popup:map("n", "<C-E>", map_callback, { noremap = true })
-	popup:map("i", "<C-E>", map_callback, { noremap = true })
-	popup:map("n", "<CR>", map_callback, { noremap = true })
+	-- print(vim.inspect(popup.border.style))
 
 	-- Set keymaps
-	-- vim.api.nvim_buf_del_keymap(popup.bufnr, "n", "<C-E>")
-	-- vim.api.nvim_buf_set_keymap(popup.bufnr, "n", "<C-E>", ":close<CR>", {})
-	-- vim.api.nvim_buf_set_keymap(popup.bufnr, "i", "<C-E>", ":close<CR>", {})
-
-	-- vim.api.nvim_buf_del_keymap(popup.bufnr, "n", "<CR>")
-	-- vim.api.nvim_buf_set_keymap(popup.bufnr, "n", "<CR>", ":close<CR>", {})
+	set_popup_maps(popup)
 
 	-- set content
 	vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, { "// sc-scratchpad.nvim", "" })
@@ -89,19 +101,25 @@ function M.open()
 
 	-- unmount component when cursor leaves buffer
 	popup:on(event.BufLeave, function()
+
+		-- Get text from buffer
 		local numLines = vim.api.nvim_buf_line_count(popup.bufnr)
 		local text = vim.api.nvim_buf_get_lines(popup.bufnr, 0, numLines, false)
 		text = flatten_lines(text, true)
+
+		-- Send text to sclang
 		send2sc(text)
+
+		-- Close buffer
 		popup:unmount()
 	end)
 
 end
+function M.setup(user_settings)
+	-- settings = user_settings
 
-function M.setup()
-	vim.cmd[[
-	command! SCScratchPad lua require('sc-scratchpad').open()
-	]]
+	register_commands()
+	register_global_keymaps()
 end
 
 return M
