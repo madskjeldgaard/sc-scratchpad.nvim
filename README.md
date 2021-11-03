@@ -1,5 +1,5 @@
 # sc-scratchpad.nvim
-
+![screenshot](assets/screen.gif) 
 
 ## Installation
 

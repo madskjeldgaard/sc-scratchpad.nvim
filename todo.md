@@ -1,0 +1,3 @@
+- Make possible to recall last buffer
+- Document settings
+- Fix text in border + border shape
