@@ -11,20 +11,22 @@ Then this plugin is for you!
 
 You need NVim >= 0.5 to use this plugin.
 
-[This plugin uses nui.nvim](https://github.com/MunifTanjim/nui.nvim) for the UI and it needs to be installed along side this plugin.
+[This plugin uses nui.nvim](https://github.com/MunifTanjim/nui.nvim) for the UI and it needs to be installed along side this plugin as well as [scnvim](https://github.com/davidgranstrom/scnvim) for the SuperCollider stuff.
 
-Using [vim-plugin](https://github.com/junegunn/vim-plug)
+Using [vim-plugin](https://github.com/junegunn/vim-plug):
 
 ```vim
 Plug 'MunifTanjim/nui.nvim'
+Plug 'davidgranstrom/scnvim'
 Plug 'madskjeldgaard/sc-scratchpad.nvim'
 ```
 
-Using [packer.nvim](https://github.com/wbthomason/packer.nvim)
+Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
 
 ```lua
-use 'wbthomason/packer.nvim'
+use 'madskjeldgaard/sc-scratchpad.nvim'
 use 'MunifTanjim/nui.nvim'
+use 'davidgranstrom/scnvim'
 ```
 
 
