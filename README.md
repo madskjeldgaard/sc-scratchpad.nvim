@@ -9,6 +9,8 @@ Then this plugin is for you!
 
 ## Installation
 
+You need NVim >= 0.5 to use this plugin.
+
 [This plugin uses nui.nvim](https://github.com/MunifTanjim/nui.nvim) for the UI and it needs to be installed along side this plugin.
 
 Using [vim-plugin](https://github.com/junegunn/vim-plug)
