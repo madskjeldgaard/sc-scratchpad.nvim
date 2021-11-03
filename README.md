@@ -1,8 +1,5 @@
 # sc-scratchpad.nvim
 
-## Demo
-
-TODO
 
 ## Installation
 
@@ -20,16 +17,14 @@ use 'madskjeldgaard/sc-scratchpad.nvim'
 
 ## Setup
 
-TODO
-
-## Examples / usage
-
-TODO
-
-## How to contribute
-
-TODO
-
-## Public API
-
-TODO
+```lua
+require"sc-scratchpad".setup({
+	keymaps = {
+		toggle = "<space>",
+		send = "<C-E>",
+	},
+	position = "50%",
+	width = "50%",
+	height = "50%",
+})
+```
