@@ -26,9 +26,8 @@ local function register_commands()
 end
 
 local function register_global_keymaps()
-
 	-- Toggle scratchpad
-	vim.api.nvim_set_keymap("n", settings.keymaps.toggle, ":SCratch<CR>", {})
+	vim.api.nvim_buf_set_keymap(0, "n", settings.keymaps.toggle, ":SCratch<CR>", {})
 end
 
 local function set_popup_maps(popup)
