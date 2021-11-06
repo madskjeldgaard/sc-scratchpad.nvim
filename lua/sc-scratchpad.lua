@@ -134,7 +134,7 @@ function M.setup(user_settings)
 		apply_user_settings(user_settings)
 	end
 
-	M.print_settings()
+	-- M.print_settings()
 	-- settings = user_settings
 
 	register_commands()
