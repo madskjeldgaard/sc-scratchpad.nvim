@@ -114,7 +114,27 @@ function M.open()
 
 end
 
+local function apply_user_settings(user_settings)
+	for key, value in pairs(user_settings) do
+		if key ~= nil then
+			settings[key] = value
+		end
+	end
+end
+
+function M.print_settings()
+	for settingName, settingVal in pairs(settings) do
+		print(settingName .. ": " .. tostring(settingVal))
+	end
+end
+
 function M.setup(user_settings)
+
+	if user_settings then
+		apply_user_settings(user_settings)
+	end
+
+	M.print_settings()
 	-- settings = user_settings
 
 	register_commands()
