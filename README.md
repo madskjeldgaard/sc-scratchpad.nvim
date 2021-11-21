@@ -29,7 +29,6 @@ use 'MunifTanjim/nui.nvim'
 use 'davidgranstrom/scnvim'
 ```
 
-
 ## Usage
 
 By default, pressing the space bar in a supercollider buffer will open up a temporary sc-scratchpad buffer. Put some code in and then press space or `C-e` to execute it. 
