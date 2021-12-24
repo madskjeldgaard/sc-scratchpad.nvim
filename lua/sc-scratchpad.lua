@@ -16,6 +16,7 @@ settings.keymaps = {
 
 settings.open_insertmode = true
 
+settings.border = "double"
 settings.position = "50%"
 settings.width = "50%"
 settings.height = "50%"
@@ -98,7 +99,14 @@ function M.open()
 		enter = true,
 		focusable = true,
 		border = {
-			style = "single"
+			style = settings.border,
+			highlight = "FloatBorder",
+				text = {
+				top = "SuperCollider",
+				top_align = "center",
+				bottom = "scratchpad",
+				bottom_align = "center",
+				}
 		},
 		-- border = {
 		-- 	style = "rounded",

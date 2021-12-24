@@ -41,6 +41,7 @@ require"sc-scratchpad".setup({
 		toggle = "<space>", -- Open/close buffer
 		send = "<C-E>", -- Send and close
 	},
+	border = "rounded", -- "double", "none", "rounded", "shadow", "single" or "solid"
 	position = "50%",
 	width = "50%",
 	height = "50%",
