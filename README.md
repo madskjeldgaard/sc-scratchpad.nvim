@@ -1,11 +1,11 @@
 # sc-scratchpad.nvim
-![screenshot](assets/screen.gif) 
+![screenshot](assets/scratchpad.png) 
 
 Is your SuperCollider code filled with things like `3.linexp(0,10,300.0,555.0)` and `1-0.5` and `~someCrap.class.postln` ?
 
 Then this plugin is for you! 
 
-*sc-scratchpad* allows the user to pop open a throwaway buffer, fill it with whatever code you want to execute and then execute and destroy it.
+*sc-scratchpad* allows the user to pop open a throwaway buffer for experimentation.
 
 ## Installation
 
