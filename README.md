@@ -33,11 +33,6 @@ use {
 				toggle = "<space>", -- Open/close buffer
 				send = "<C-e>", -- Send and close
 			},
-			border = "double", -- Border style. "double", "none", "rounded", "shadow", "single" or "solid"
-			position = "50%",
-			width = "50%",
-			height = "50%",
-			firstline = "// Scratchpad",
 			open_insertmode = true -- Open scratchpad buffer in insertmode
 		})
 end
