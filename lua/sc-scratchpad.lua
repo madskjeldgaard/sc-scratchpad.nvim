@@ -145,6 +145,9 @@ function M.open()
 
 		-- Close buffer
 		popup:unmount()
+
+		-- Stop insertmode
+		vim.cmd[[stopinsert]]
 	end)
 
 end
@@ -168,9 +171,6 @@ function M.setup(user_settings)
 	if user_settings then
 		apply_user_settings(user_settings)
 	end
-
-	-- M.print_settings()
-	-- settings = user_settings
 
 	register_commands()
 	set_keymaps()
