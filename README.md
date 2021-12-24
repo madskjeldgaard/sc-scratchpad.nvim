@@ -5,7 +5,7 @@ Is your SuperCollider code filled with things like `3.linexp(0,10,300.0,555.0)` 
 
 Then this plugin is for you! 
 
-*sc-scratchpad* allows the user to pop open a throwaway buffer for experimentation.
+*sc-scratchpad* allows the user to quickly pop open a throwaway buffer for experimentation with sclang code.
 
 ## Installation
 
@@ -24,9 +24,24 @@ Plug 'madskjeldgaard/sc-scratchpad.nvim'
 Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
 
 ```lua
-use 'madskjeldgaard/sc-scratchpad.nvim'
-use 'MunifTanjim/nui.nvim'
-use 'davidgranstrom/scnvim'
+use {
+	'madskjeldgaard/sc-scratchpad.nvim',
+	requires = { 'MunifTanjim/nui.nvim', 'davidgranstrom/scnvim' }, 
+	config = function()
+		require"sc-scratchpad".setup({
+			keymaps = {
+				toggle = "<space>", -- Open/close buffer
+				send = "<C-E>", -- Send and close
+			},
+			border = "double", -- Border style. "double", "none", "rounded", "shadow", "single" or "solid"
+			position = "50%",
+			width = "50%",
+			height = "50%",
+			firstline = "// Scratchpad",
+			open_insertmode = true -- Open scratchpad buffer in insertmode
+		})
+end
+}
 ```
 
 ## Usage
