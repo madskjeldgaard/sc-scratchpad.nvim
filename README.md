@@ -1,11 +1,9 @@
 # sc-scratchpad.nvim
 ![screenshot](assets/scratchpad.png) 
 
-Is your SuperCollider code filled with things like `3.linexp(0,10,300.0,555.0)` and `1-0.5` and `~someCrap.class.postln` ?
+Quickly open a scratchpad buffer, write some code and execute the contents using SuperCollider. 
 
-Then this plugin is for you! 
-
-*sc-scratchpad* allows the user to quickly pop open a throwaway buffer for experimentation with sclang code.
+*sc-scratchpad* allows the user to quickly pop open a throwaway buffer for experimentation with sclang code. You can use this buffer as a scratchpad for messing around with the SuperCollider language, trying out methods or doing other small code experiments that you don't want to have inserted into your main code files.
 
 ## Installation
 
