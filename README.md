@@ -31,7 +31,7 @@ use {
 		require"sc-scratchpad".setup({
 			keymaps = {
 				toggle = "<space>", -- Open/close buffer
-				send = "<C-E>", -- Send and close
+				send = "<C-e>", -- Send and close
 			},
 			border = "double", -- Border style. "double", "none", "rounded", "shadow", "single" or "solid"
 			position = "50%",
@@ -54,7 +54,7 @@ By default, pressing the space bar in a supercollider buffer will open up a temp
 require"sc-scratchpad".setup({
 	keymaps = {
 		toggle = "<space>", -- Open/close buffer
-		send = "<C-E>", -- Send and close
+		send = "<C-e>", -- Send and close
 	},
 	border = "double", -- "double", "none", "rounded", "shadow", "single" or "solid"
 	position = "50%",
