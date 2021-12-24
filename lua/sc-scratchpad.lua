@@ -25,16 +25,22 @@ local function register_commands()
 	]]
 end
 
-local function register_global_keymaps()
-	print(settings.keymaps["toggle"])
+local function set_keymaps()
+
+	local mappings = {
+		["<cmd>SCratch<CR>"] = settings.keymaps["toggle"]
+	}
+
 	-- Toggle scratchpad
 	vim.cmd[[augroup scratchpad]]
 	vim.cmd[[au!]]
-	vim.cmd(
-		string.format("au! BufEnter *.scd,*.sc,*.schelp,*.scdoc lua vim.api.nvim_buf_set_keymap(0, 'n', '%s', '<cmd>SCratch<CR>', {})",
-			settings.keymaps["toggle"]
+	for command, keymap in pairs(mappings) do
+		vim.cmd(
+			string.format("au! BufEnter *.scd,*.sc,*.schelp,*.scdoc lua vim.api.nvim_buf_set_keymap(0, 'n', '%s', '%s', {})",
+				keymap, command
+			)
 		)
-	)
+	end
 	vim.cmd[[augroup END]]
 end
 
@@ -146,7 +152,7 @@ function M.setup(user_settings)
 	-- settings = user_settings
 
 	register_commands()
-	register_global_keymaps()
+	set_keymaps()
 end
 
 return M
