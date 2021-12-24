@@ -38,11 +38,13 @@ By default, pressing the space bar in a supercollider buffer will open up a temp
 ```lua
 require"sc-scratchpad".setup({
 	keymaps = {
-		toggle = "<space>",
-		send = "<C-E>",
+		toggle = "<space>", -- Open/close buffer
+		send = "<C-E>", -- Send and close
 	},
 	position = "50%",
 	width = "50%",
 	height = "50%",
+	firstline = "// Scratchpad",
+	open_insertmode = true -- Open scratchpad buffer in insertmode
 })
 ```

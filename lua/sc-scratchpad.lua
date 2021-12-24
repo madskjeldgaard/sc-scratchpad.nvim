@@ -8,21 +8,30 @@ local event = require("nui.utils.autocmd").event
 local utils = require"sc-scratchpad/utils"
 local settings = {}
 
--- Defualt settings
+-- Default settings
 settings.keymaps = {
 	toggle = "<space>",
 	send = "<C-E>",
-	-- previous = "<BS>"
 }
+
+settings.open_insertmode = true
 
 settings.position = "50%"
 settings.width = "50%"
 settings.height = "50%"
 
+settings.firstline = "// Scratchpad"
+
 local function register_commands()
 	vim.cmd[[
 	command! SCratch lua require('sc-scratchpad').open()
 	]]
+end
+
+local function copybuffer(fromBuffer, toBuffer)
+	local numlines = vim.api.nvim_buf_line_count(fromBuffer)
+	local fromlines = vim.api.nvim_buf_get_lines(fromBuffer, 0, numlines, false)
+	vim.api.nvim_buf_set_lines(toBuffer, 0, numlines, false, fromlines)
 end
 
 local function set_keymaps()
@@ -46,18 +55,34 @@ end
 
 local function set_popup_maps(popup)
 
-	local keymap_callback_func = function(bufnr)
+	local sendfunc = function(bufnr)
+		-- Get text from buffer
+		local numLines = vim.api.nvim_buf_line_count(bufnr)
+		local buffer_contents = vim.api.nvim_buf_get_lines(bufnr, 0, numLines, false)
+		local text = utils.flatten_lines(buffer_contents, true)
+
+		-- Send it off
+		send2sc(text)
+	end
+
+	local closefunc = function(bufnr)
 		local window = vim.api.nvim_get_current_win()
 		vim.api.nvim_win_close(window, true)
+
+	end
+
+	local sendandclosefunc = function(bufnr)
+		sendfunc(bufnr)
+		closefunc(bufnr)
 	end
 
 	-- local previous_buf = function(bufnr)
 	-- 	load_old(bufnr)
 	-- end
 
-	popup:map("n", settings.keymaps.send, keymap_callback_func, { noremap = true })
-	popup:map("i", settings.keymaps.send, keymap_callback_func, { noremap = true })
-	popup:map("n", settings.keymaps.toggle, keymap_callback_func, { noremap = true })
+	popup:map("n", settings.keymaps.send, sendandclosefunc, { noremap = true })
+	popup:map("i", settings.keymaps.send, sendandclosefunc, { noremap = true })
+	popup:map("n", settings.keymaps.toggle, closefunc, { noremap = true })
 
 	-- popup:map("n", settings.keymaps.previous, previous_buf, { noremap = true })
 
@@ -101,26 +126,22 @@ function M.open()
 	-- Set keymaps
 	set_popup_maps(popup)
 
-	-- set content
-	local template_content ={ "// sc-scratchpad" .. #M.buffers+1, "" }
-	vim.api.nvim_buf_set_lines(popup.bufnr, 0, 1, false, template_content)
-	vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), {2,1})
+	-- Set buffer from saved
+	copybuffer(settings.buffer, popup.bufnr)
+
+	-- Set cursor and insert mode
+	local numlines = vim.api.nvim_buf_line_count(popup.bufnr)
+	vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), {numlines,0})
+
+	if settings.open_insertmode then
+		vim.cmd[[startinsert]]
+	end
 
 	-- unmount component when cursor leaves buffer
 	popup:on(event.WinClosed, function()
 
-		-- Get text from buffer
-		local numLines = vim.api.nvim_buf_line_count(popup.bufnr)
-		local buffer_contents = vim.api.nvim_buf_get_lines(popup.bufnr, 0, numLines, false)
-		local text = utils.flatten_lines(buffer_contents, true)
-
-		-- Only send if something has been typed in
-		if utils.flatten_lines(buffer_contents) ~= utils.flatten_lines(template_content) then
-			-- Send text to sclang
-			send2sc(text)
-		end
-
-		-- push(popup.bufnr)
+		-- Copy buffer
+		copybuffer(popup.bufnr, settings.buffer)
 
 		-- Close buffer
 		popup:unmount()
@@ -153,6 +174,11 @@ function M.setup(user_settings)
 
 	register_commands()
 	set_keymaps()
+
+	-- Create scratchpad buffer
+	settings.buffer = vim.api.nvim_create_buf(false, true);
+	vim.api.nvim_buf_set_lines(settings.buffer, 0, 1, false, {settings.firstline, ""});
+
 end
 
 return M
