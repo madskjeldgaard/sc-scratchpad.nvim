@@ -25,6 +25,7 @@ Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
 use {
 	'madskjeldgaard/sc-scratchpad.nvim',
 	requires = { 'MunifTanjim/nui.nvim', 'davidgranstrom/scnvim' }, 
+	after = {'scnvim'},
 	config = function()
 		require"sc-scratchpad".setup({
 			keymaps = {
