@@ -50,6 +50,11 @@ local function set_keymaps()
 				keymap, command
 			)
 		)
+		vim.cmd(
+			string.format("au! BufEnter FileType supercollider lua vim.api.nvim_buf_set_keymap(0, 'n', '%s', '%s', {})",
+				keymap, command
+			)
+		)
 	end
 	vim.cmd[[augroup END]]
 end
