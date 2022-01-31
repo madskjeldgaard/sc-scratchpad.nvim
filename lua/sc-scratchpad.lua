@@ -151,18 +151,7 @@ function M.open()
 	end
 
 	-- unmount component when cursor leaves buffer
-	popup:on(event.BufLeave, function()
-		-- Copy buffer
-		copybuffer(popup.bufnr, settings.buffer)
-
-		popup:unmount()
-
-		-- Stop insertmode
-		vim.cmd[[stopinsert]]
-	end)
-
-	-- unmount component when cursor leaves buffer
-	popup:on(event.WinClosed, function()
+	popup:on(event.WinLeave, function()
 
 		-- Copy buffer
 		copybuffer(popup.bufnr, settings.buffer)
