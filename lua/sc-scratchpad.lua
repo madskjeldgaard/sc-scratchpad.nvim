@@ -92,10 +92,6 @@ local function set_popup_maps(popup)
 
 	-- popup:map("n", settings.keymaps.previous, previous_buf, { noremap = true })
 
-	-- Make sure that scnvim's post window toggle doesn't interfere
-	-- @FIXME: This is hacky and should be done in a more reliable fashion compatible with
-	vim.api.nvim_buf_del_keymap(popup.bufnr, "n", "<CR>")
-
 end
 -- 	return left_hand_sides
 -- end
