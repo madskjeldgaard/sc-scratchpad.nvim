@@ -61,7 +61,8 @@ end
 
 local function set_popup_maps(popup)
 
-	local sendfunc = function(bufnr)
+	local sendfunc = function()
+		local bufnr = popup.bufnr
 		-- Get text from buffer
 		local numLines = vim.api.nvim_buf_line_count(bufnr)
 		local buffer_contents = vim.api.nvim_buf_get_lines(bufnr, 0, numLines, false)
@@ -71,15 +72,17 @@ local function set_popup_maps(popup)
 		send2sc(text)
 	end
 
-	local closefunc = function(bufnr)
+	local closefunc = function()
+		local bufnr = popup.bufnr
 		local window = vim.api.nvim_get_current_win()
 		vim.api.nvim_win_close(window, true)
 
 	end
 
-	local sendandclosefunc = function(bufnr)
-		sendfunc(bufnr)
-		closefunc(bufnr)
+	local sendandclosefunc = function()
+		local bufnr = popup.bufnr
+		sendfunc()
+		closefunc()
 	end
 
 	-- local previous_buf = function(bufnr)
