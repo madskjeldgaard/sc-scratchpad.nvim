@@ -55,6 +55,7 @@ require"sc-scratchpad".setup({
 	width = "50%",
 	height = "50%",
 	firstline = "// Scratchpad",
-	open_insertmode = true -- Open scratchpad buffer in insertmode
+	open_insertmode = true, -- Open scratchpad buffer in insertmode
+    close_on_execution = false -- Should the window automatically close on exec?
 })
 ```

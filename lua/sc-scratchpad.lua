@@ -15,6 +15,7 @@ settings.keymaps = {
 }
 
 settings.open_insertmode = true
+settings.close_on_execution = true
 
 settings.border = "double"
 settings.position = "50%"
@@ -82,7 +83,9 @@ local function set_popup_maps(popup)
 	local sendandclosefunc = function()
 		local bufnr = popup.bufnr
 		sendfunc()
-		closefunc()
+        if settings.close_on_execution == 1 then
+            closefunc()
+        end
 	end
 
 	-- local previous_buf = function(bufnr)
