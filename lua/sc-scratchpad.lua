@@ -107,13 +107,12 @@ function M.open()
 		focusable = true,
 		border = {
 			style = settings.border,
-			highlight = "FloatBorder",
-				text = {
+			text = {
 				top = "SuperCollider",
 				top_align = "center",
 				bottom = "scratchpad",
 				bottom_align = "center",
-				}
+			}
 		},
 		-- border = {
 		-- 	style = "rounded",
@@ -131,7 +130,7 @@ function M.open()
 		},
 		win_options = {
 			winblend = 5,
-			winhighlight = "Normal:Normal",
+			winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
 		},
 	})
 
